@@ -2,16 +2,13 @@
 # Local Declarations
 #-------------------------------
 locals {
-  account_tier             = (var.account_kind == "FileStorage" ? "Premium" : split("_", var.skuname)[0])
-  account_replication_type = (local.account_tier == "Premium" ? "LRS" : split("_", var.skuname)[1])
-
   resource_group_name = element(coalescelist(data.azurerm_resource_group.rgrp.*.name, azurerm_resource_group.rg.*.name, [""]), 0)
   location            = element(coalescelist(data.azurerm_resource_group.rgrp.*.location, azurerm_resource_group.rg.*.location, [""]), 0)
 }
 
 #---------------------------------------------------------
-# Resource Group Creation or selection - Default is "false"
-#----------------------------------------------------------
+# Resource Group Creation or selection - Default is "true"
+#---------------------------------------------------------
 data "azurerm_resource_group" "rgrp" {
   count = var.create_resource_group == false ? 1 : 0
   name  = var.resource_group_name
@@ -36,9 +33,21 @@ resource "azurerm_management_lock" "main" {
 #---------------------------------------------------------
 # Private Endpoint Creation or selection
 #----------------------------------------------------------
-#tfsec:ignore:AZU012
 resource "azurerm_private_endpoint" "main" {
-  name                = lower(var.name)
+  name                = format("%s-pe", lower(var.name))
   resource_group_name = local.resource_group_name
   location            = local.location
+  subnet_id           = var.subnet_id
+
+  private_service_connection {
+    name                           = format("%s-psc", lower(var.name))
+    is_manual_connection           = false
+    private_connection_resource_id = var.endpoint_resource_id
+    subresource_names              = var.subresource_names
+  }
+
+  private_dns_zone_group {
+    name                 = var.dns.zone_name
+    private_dns_zone_ids = var.dns.zone_ids
+  }
 }
