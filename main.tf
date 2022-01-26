@@ -33,7 +33,6 @@ resource "azurerm_management_lock" "main" {
   notes      = "This Resource Group Cannot be deleted"
 }
 
-
 #---------------------------------------------------------
 # Private Endpoint Creation or selection
 #----------------------------------------------------------
