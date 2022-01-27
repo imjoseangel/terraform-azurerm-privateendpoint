@@ -27,18 +27,6 @@ variable "subnet_id" {
   default     = null
 }
 
-variable "dns_zone_name" {
-  description = "The name of the privatelink DNS zone to register the Private Endpoint resource type."
-  type        = string
-  default     = "privatelink.azure.com"
-}
-
-variable "dns_zone_ids" {
-  description = "The name and ID of the privatelink DNS zone in Azure to register the Private Endpoint resource type."
-  type        = list(string)
-  default     = ["privatelink.azure.com"]
-}
-
 variable "resource_id" {
   description = "The ID of the resource that the new Private Endpoint will be assigned to."
   type        = string
@@ -49,6 +37,18 @@ variable "subresource_names" {
   description = "The name of the subresource that the new Private Endpoint will be assigned to."
   type        = list(string)
   default     = null
+}
+
+variable "dns_zone_name" {
+  description = "The name of the privatelink DNS zone to register the Private Endpoint resource type."
+  type        = string
+  default     = "privatelink.azure.com"
+}
+
+variable "dns_zone_ids" {
+  description = "The name and ID of the privatelink DNS zone in Azure to register the Private Endpoint resource type."
+  type        = list(string)
+  default     = ["privatelink.azure.com"]
 }
 
 variable "tags" {
