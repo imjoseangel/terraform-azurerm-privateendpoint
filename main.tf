@@ -42,12 +42,12 @@ resource "azurerm_private_endpoint" "main" {
   private_service_connection {
     name                           = format("%s-psc", lower(var.name))
     is_manual_connection           = false
-    private_connection_resource_id = var.endpoint_resource_id
+    private_connection_resource_id = var.resource_id
     subresource_names              = var.subresource_names
   }
 
   private_dns_zone_group {
-    name                 = var.dns.zone_name
-    private_dns_zone_ids = var.dns.zone_ids
+    name                 = var.dns_zone_name
+    private_dns_zone_ids = var.dns_zone_ids
   }
 }

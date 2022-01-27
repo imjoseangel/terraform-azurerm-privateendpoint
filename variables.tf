@@ -20,3 +20,21 @@ variable "name" {
   description = "The name of the azure storage account"
   type        = string
 }
+
+variable "subnet_id" {
+  description = "The ID of the subnet where the Private Endpoint will be created."
+  type        = string
+  default     = null
+}
+
+variable "dns_zone_name" {
+  description = "The name of the privatelink DNS zone to register the Private Endpoint resource type."
+  type        = string
+  default     = "privatelink.azure.com"
+}
+
+variable "dns_zone_ids" {
+  description = "The name and ID of the privatelink DNS zone in Azure to register the Private Endpoint resource type."
+  type        = list(string)
+  default     = ["privatelink.azure.com"]
+}
