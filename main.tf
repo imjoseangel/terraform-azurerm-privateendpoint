@@ -38,6 +38,7 @@ resource "azurerm_private_endpoint" "main" {
   resource_group_name = local.resource_group_name
   location            = local.location
   subnet_id           = var.subnet_id
+  tags                = merge({ "ResourceName" = format("%s-pe", lower(var.name)) }, var.tags, )
 
   private_service_connection {
     name                           = format("%s-psc", lower(var.name))
@@ -50,6 +51,4 @@ resource "azurerm_private_endpoint" "main" {
     name                 = var.dns_zone_name
     private_dns_zone_ids = var.dns_zone_ids
   }
-
-  tags = var.merge({ "ResourceName" = format("%s-pe", lower(var.name)) }, var.tags, )
 }
