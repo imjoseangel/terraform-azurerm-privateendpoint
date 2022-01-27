@@ -50,4 +50,6 @@ resource "azurerm_private_endpoint" "main" {
     name                 = var.dns_zone_name
     private_dns_zone_ids = var.dns_zone_ids
   }
+
+  tags = var.merge({ "ResourceName" = format("%s-pe", lower(var.name)) }, var.tags, )
 }

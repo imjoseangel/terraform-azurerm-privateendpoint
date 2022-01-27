@@ -50,3 +50,9 @@ variable "subresource_names" {
   type        = list(string)
   default     = null
 }
+
+variable "tags" {
+  description = "Tags to apply to all resources created."
+  type        = map(string)
+  default     = {}
+}
