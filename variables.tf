@@ -38,3 +38,15 @@ variable "dns_zone_ids" {
   type        = list(string)
   default     = ["privatelink.azure.com"]
 }
+
+variable "resource_id" {
+  description = "The ID of the resource that the new Private Endpoint will be assigned to."
+  type        = string
+  default     = null
+}
+
+variable "subresource_names" {
+  description = "The name of the subresource that the new Private Endpoint will be assigned to."
+  type        = list(string)
+  default     = null
+}
