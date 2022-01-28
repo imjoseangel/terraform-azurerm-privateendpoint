@@ -48,7 +48,7 @@ resource "azurerm_private_endpoint" "main" {
   }
 
   dynamic "private_dns_zone_group" {
-    for_each = var.name == null ? [] : ["private_dns_zone"]
+    for_each = var.dns_zone_name == null ? [] : ["private_dns_zone"]
     content {
       name                 = var.dns_zone_name
       private_dns_zone_ids = var.dns_zone_ids
