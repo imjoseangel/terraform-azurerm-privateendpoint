@@ -42,8 +42,3 @@ output "private_service_connection_ip" {
   description = "(Computed) The private IP address associated with the private endpoint, note that you will have a private IP address assigned to the private endpoint even if the connection request was Rejected"
   value       = azurerm_private_endpoint.main.private_service_connection.*.private_ip_address
 }
-
-output "record_sets" {
-  description = "The record sets created for the private endpoint"
-  value       = azurerm_private_endpoint.main.private_service_connection.*.record_sets
-}
