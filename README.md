@@ -13,8 +13,36 @@ This Terraform module deploys a Private Endpoint on Azure.
 ## Usage in Terraform 1.0
 
 ```terraform
+data "azurerm_resource_group" "main" {
+  name = "network-rsg"
+}
+
+data "azurerm_virtual_network" "main" {
+  name                = "global-vnet"
+  resource_group_name = data.azurerm_resource_group.main.name
+}
+
+data "azurerm_subnet" "main" {
+  name                 = "privateendpoint-snet"
+  resource_group_name  = data.azurerm_resource_group.main.name
+  virtual_network_name = data.azurerm_virtual_network.main.name
+}
+
+resource "azurerm_private_dns_zone" "main" {
+  name                = "privatelink.blob.core.windows.net"
+  resource_group_name = "storage-rg"
+}
+
 module "privateendpoint" {
-  source = "github.com/imjoseangel/terraform-azurerm-privateendpoint"
+  source              = "github.com/imjoseangel/terraform-azurerm-privateendpoint"
+  name                = "mystorage"
+  resource_group_name = "storage-rg"
+  location            = "westeurope"
+  subnet_id           = data.azurerm_subnet.main.id
+  resource_id         = azurerm_storage_account.main.id
+  subresource_names   = ["blob"]
+  dns_zone_name       = "mystoragedns"
+  dns_zone_ids        = [azurerm_private_dns_zone.main.id]
 }
 ```
 
