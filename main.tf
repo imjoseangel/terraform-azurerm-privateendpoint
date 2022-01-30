@@ -34,25 +34,17 @@ resource "azurerm_management_lock" "main" {
 # Private Endpoint Creation or selection
 #----------------------------------------------------------
 resource "azurerm_private_endpoint" "main" {
-  name                = format("%s-pe", lower(var.name))
+  count               = length(var.subresource_names)
+  name                = format("%s-%s-pe", lower(var.name), var.subresource_names[count.index])
   resource_group_name = local.resource_group_name
   location            = local.location
   subnet_id           = var.subnet_id
   tags                = merge({ "ResourceName" = format("%s-pe", lower(var.name)) }, var.tags, )
 
   private_service_connection {
-    name                           = format("%s-psc", lower(var.name))
+    name                           = format("%s-%s-psc", lower(var.name), var.subresource_names[count.index])
     is_manual_connection           = false
     private_connection_resource_id = var.resource_id
-    subresource_names              = var.subresource_names
+    subresource_names              = [var.subresource_names[count.index]]
   }
-
-  dynamic "private_dns_zone_group" {
-    for_each = var.dns_zone_name == null ? [] : ["private_dns_zone"]
-    content {
-      name                 = var.dns_zone_name
-      private_dns_zone_ids = var.dns_zone_ids
-    }
-  }
-
 }

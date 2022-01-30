@@ -39,18 +39,6 @@ variable "subresource_names" {
   default     = null
 }
 
-variable "dns_zone_name" {
-  description = "The name of the privatelink DNS zone to register the Private Endpoint resource type."
-  type        = string
-  default     = null
-}
-
-variable "dns_zone_ids" {
-  description = "The name and ID of the privatelink DNS zone in Azure to register the Private Endpoint resource type."
-  type        = list(string)
-  default     = null
-}
-
 variable "tags" {
   description = "Tags to apply to all resources created."
   type        = map(string)
