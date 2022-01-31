@@ -4,7 +4,7 @@
 
 ## Deploys a Azure Private Endpoint in a given subnet for a given component
 
-This Terraform module deploys a Private Endpoint on Azure.
+This Terraform module deploys a Private Endpoint on Azure without DNS Private Zone.
 
 ### NOTES
 
