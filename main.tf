@@ -35,14 +35,14 @@ resource "azurerm_management_lock" "main" {
 #----------------------------------------------------------
 resource "azurerm_private_endpoint" "main" {
   count               = length(var.subresource_names)
-  name                = format("%s-%s-pe", lower(var.name), var.subresource_names[count.index])
+  name                = format("%s-%s", lower(var.name), var.subresource_names[count.index])
   resource_group_name = local.resource_group_name
   location            = local.location
   subnet_id           = var.subnet_id
   tags                = merge({ "ResourceName" = format("%s-pe", lower(var.name)) }, var.tags, )
 
   private_service_connection {
-    name                           = format("%s-%s-psc", lower(var.name), var.subresource_names[count.index])
+    name                           = format("%s-%s", lower(var.name), var.subresource_names[count.index])
     is_manual_connection           = false
     private_connection_resource_id = var.resource_id
     subresource_names              = [var.subresource_names[count.index]]
