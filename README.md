@@ -40,9 +40,7 @@ module "privateendpoint" {
   location            = "westeurope"
   subnet_id           = data.azurerm_subnet.main.id
   resource_id         = azurerm_storage_account.main.id
-  subresource_names   = ["blob"]
-  dns_zone_name       = "mystoragedns"
-  dns_zone_ids        = [azurerm_private_dns_zone.main.id]
+  subresource_names   = ["blob", "file"]
 }
 ```
 
