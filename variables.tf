@@ -36,7 +36,6 @@ variable "resource_id" {
 variable "subresource_names" {
   description = "The name of the subresource that the new Private Endpoint will be assigned to."
   type        = list(string)
-  default     = null
 }
 
 variable "tags" {
